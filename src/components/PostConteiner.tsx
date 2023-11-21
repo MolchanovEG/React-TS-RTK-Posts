@@ -11,8 +11,6 @@ const PostContainer: FC = () => {
       const scrolledToBottom =
         window.innerHeight + window.scrollY >= document.body.offsetHeight;
       if (scrolledToBottom && !isFetching) {
-        console.log("Fetching more data...");
-        console.log("page: ", page);
         setPage(page + 1);
       }
     };

@@ -12,7 +12,6 @@ export const postAPI = createApi({
         url: `/posts`,
         params: {
           _limit: 15,
-          // _start: page * 15,
           _page: page,
         },
       }),
