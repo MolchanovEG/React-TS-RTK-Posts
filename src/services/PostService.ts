@@ -8,13 +8,25 @@ export const postAPI = createApi({
   }),
   endpoints: (build) => ({
     fetchAllPosts: build.query<IPost[], number>({
-      query: (limit: number = 5) => ({
-        //limit для пагинации
+      query: (page: number) => ({
         url: `/posts`,
         params: {
-          _limit: limit,
+          _limit: 15,
+          // _start: page * 15,
+          _page: page,
         },
       }),
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+
+      merge: (currentCache, newItems) => {
+        currentCache.push(...newItems);
+      },
+
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
   }),
 });

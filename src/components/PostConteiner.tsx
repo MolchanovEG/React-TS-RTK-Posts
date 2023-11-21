@@ -1,8 +1,28 @@
+import { FC, useEffect, useState } from "react";
 import { postAPI } from "../services/PostService";
 import PostItem from "./PostItem";
 
-const PostContainer = () => {
-  const { data: posts } = postAPI.useFetchAllPostsQuery(10);
+const PostContainer: FC = () => {
+  const [page, setPage] = useState(1);
+  const { data: posts, isFetching } = postAPI.useFetchAllPostsQuery(page);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrolledToBottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight;
+      if (scrolledToBottom && !isFetching) {
+        console.log("Fetching more data...");
+        console.log("page: ", page);
+        setPage(page + 1);
+      }
+    };
+
+    document.addEventListener("scroll", onScroll);
+
+    return function () {
+      document.removeEventListener("scroll", onScroll);
+    };
+  }, [page, isFetching]);
 
   return (
     <div>

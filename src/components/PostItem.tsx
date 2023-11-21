@@ -1,16 +1,19 @@
 import { FC } from "react";
 import { IPost } from "../models/Post";
 
-interface PostItemProps {
+interface IPostItemProps {
   post: IPost;
 }
 
-const PostItem: FC<PostItemProps> = ({ post }) => {
+const PostItem: FC<IPostItemProps> = ({ post }) => {
   return (
-    <div>
-      PostId: {post.id}. <br />
-      PostTitle: {post.title}
-      <button>Подробнее</button>
+    <div className="container__postItem">
+      <div>№ {post.id}</div>
+      <div className="postitem__title">Title: {post.title}</div>
+      <div className="postitem__body">
+        Body:{" "}
+        {post.body.length > 15 ? post.body.substring(0, 15) + "..." : post.body}
+      </div>
     </div>
   );
 };
